@@ -1,14 +1,16 @@
 FROM codercom/code-server:latest
+
 # Setează variabila de mediu pentru parolă
 ENV PASSWORD=vox123
-
-RUN code-server --install-extension chrmarti.regex 
 
 EXPOSE 8080
 EXPOSE 25565
 EXPOSE 3001
-
+RUN code-server --install-extension chrmarti.regex 
 RUN code-server --install-extension le0zh.vscode-regexp-preivew
-# Setează parola direct în Dockerfile (doar pentru scopuri de dezvoltare/testare)
-RUN code-server --install-extension chrmarti.regex --auth password --password "vox123"
+# Copiază scriptul de pornire în container
+COPY entrypoint.sh /usr/bin/entrypoint.sh
+RUN chmod +x /usr/bin/entrypoint.sh
 
+# Rulează scriptul de pornire la pornirea containerului
+ENTRYPOINT ["/usr/bin/entrypoint.sh"]
