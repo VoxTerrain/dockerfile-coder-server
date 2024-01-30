@@ -1,4 +1,7 @@
 FROM codercom/code-server:latest
+# Setează variabila de mediu pentru parolă
+ENV PASSWORD=vox123
+
 RUN code-server --install-extension chrmarti.regex 
 
 EXPOSE 8080
